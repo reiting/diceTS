@@ -1,4 +1,5 @@
 var counter = 0;
+var dieArray = [];
 //use constructor to give dice a value
 var dieContainer;
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,8 +17,11 @@ var Die = (function () {
         this.div.innerHTML = generateRandomNumber();
         this.insertDie();
         this.id = counter;
+        this.div.id = this.id.toString();
         this.div.addEventListener('dblclick', function () {
             _this.div.remove();
+            var idToRemove = _this.div.id;
+            removeDie(idToRemove);
         });
         //run for loop to find id in array, then remove that id
     }
@@ -29,7 +33,6 @@ var Die = (function () {
     };
     return Die;
 }());
-var dieArray = [];
 function addDie() {
     var die = new Die();
     dieArray.push(die);
@@ -46,24 +49,17 @@ function sumDice() {
     }
     alert('This is the sum of the dice:' + (sum));
 }
-function removeDie() {
+function removeDie(idToRemove) {
+    console.log('begin: ');
+    console.log(dieArray);
+    var dieToRemove;
+    dieArray.forEach(function (die) {
+        if (die.div.id === idToRemove) {
+            dieToRemove = die;
+        }
+    });
+    var indexToRemove = dieArray.indexOf(dieToRemove);
+    console.log("die is at current postion: " + indexToRemove);
+    dieArray.splice(indexToRemove, 1);
+    console.log(dieArray);
 }
-//     rollDie(){
-//         //rolls your dice
-//     }
-//     removeDie(){
-//         //removes this instance of a dice
-//     }
-// }
-// class DieCreator {
-//     addDie(){
-//     }
-// }
-// interface IDie {
-//     value: number;
-//     class?: string; 
-//     // if you use a question mark after the key, it is an optional key as far as expected shape of the object is concerned
-//     // interfaces set the expected value type of keys of an object
-// }
-// this.div.remove will remove the div on dblclick
-// // let variables only exist inside the closest block, var variables are in the entire funciton. '''
